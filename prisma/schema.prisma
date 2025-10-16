@@ -1,0 +1,90 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id        Int            @id @default(autoincrement())
+  email     String         @unique
+  password  String
+  isActive  Boolean        @default(true)
+  lastLogin DateTime?
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+  sessions  AdminSession[]
+}
+
+model AdminSession {
+  id        Int      @id @default(autoincrement())
+  adminId   Int
+  tokenId   String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  admin     Admin    @relation(fields: [adminId], references: [id], onDelete: Cascade)
+
+  @@map("admin_sessions")
+}
+
+model HotelCategory {
+  id                 Int            @id @default(autoincrement())
+  slug               String         @unique
+  title              String
+  description        String?
+  specs              Json?
+  videoUrl           String?
+  roomCount          Int            @default(0)
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime       @updatedAt
+  bedType            String?
+  maxOccupancy       Int?
+  roomSize           String?
+  essentialAmenities String[]       @default([])
+  images             GalleryImage[]
+  prices             Price[]
+
+  @@map("hotel_categories")
+}
+
+model RoomFeature {
+  id        Int      @id @default(autoincrement())
+  key       String   @unique
+  label     String
+  category  String   @default("amenity")
+  isActive  Boolean  @default(true)
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("room_features")
+}
+
+model Price {
+  id          Int           @id @default(autoincrement())
+  categoryId  Int
+  hourlyHours Int
+  rateCents   Int
+  label       String?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  category    HotelCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@unique([categoryId, hourlyHours])
+  @@map("prices")
+}
+
+model GalleryImage {
+  id            Int            @id @default(autoincrement())
+  category      String
+  url           String
+  publicId      String
+  caption       String?
+  categoryId    Int?
+  createdAt     DateTime       @default(now())
+  hotelCategory HotelCategory? @relation(fields: [categoryId], references: [id])
+
+  @@map("gallery_images")
+}

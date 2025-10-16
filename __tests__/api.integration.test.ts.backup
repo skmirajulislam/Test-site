@@ -1,0 +1,148 @@
+import { describe, expect, test, beforeAll, afterAll } from '@jest/globals'
+
+// Mock environment variables
+process.env.JWT_SECRET = 'test-secret-key-for-testing-purposes'
+process.env.DATABASE_URL = 'postgresql://test:test@localhost:5432/test'
+
+describe('API Tests', () => {
+    describe('Authentication API', () => {
+        test('should reject invalid credentials', async () => {
+            const response = await fetch('http://localhost:3000/api/auth', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: 'invalid@example.com',
+                    password: 'wrongpassword',
+                }),
+            })
+
+            expect(response.status).toBe(401)
+            const data = await response.json()
+            expect(data.error).toBe('Invalid credentials')
+        })
+
+        test('should validate email format', async () => {
+            const response = await fetch('http://localhost:3000/api/auth', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: 'invalid-email',
+                    password: 'password',
+                }),
+            })
+
+            expect(response.status).toBe(500) // Validation error
+        })
+    })
+
+    describe('Public APIs', () => {
+        test('should fetch categories', async () => {
+            const response = await fetch('http://localhost:3000/api/categories')
+
+            expect(response.status).toBe(200)
+            const data = await response.json()
+            expect(data.success).toBe(true)
+            expect(Array.isArray(data.data)).toBe(true)
+        })
+
+        test('should fetch prices', async () => {
+            const response = await fetch('http://localhost:3000/api/prices')
+
+            expect(response.status).toBe(200)
+            const data = await response.json()
+            expect(data.success).toBe(true)
+            expect(Array.isArray(data.data)).toBe(true)
+        })
+
+        test('should fetch gallery images', async () => {
+            const response = await fetch('http://localhost:3000/api/gallery')
+
+            expect(response.status).toBe(200)
+            const data = await response.json()
+            expect(data.success).toBe(true)
+            expect(Array.isArray(data.data)).toBe(true)
+            expect(Array.isArray(data.categories)).toBe(true)
+        })
+
+        test('should filter gallery by category', async () => {
+            const response = await fetch('http://localhost:3000/api/gallery?category=Rooms')
+
+            expect(response.status).toBe(200)
+            const data = await response.json()
+            expect(data.success).toBe(true)
+
+            // All returned images should be in 'Rooms' category
+            data.data.forEach((image: any) => {
+                expect(image.category).toBe('Rooms')
+            })
+        })
+    })
+
+    describe('Admin APIs (Protected)', () => {
+        test('should require authentication for admin endpoints', async () => {
+            const response = await fetch('http://localhost:3000/api/admin/categories')
+
+            expect(response.status).toBe(401)
+            const data = await response.json()
+            expect(data.error).toBe('Unauthorized')
+        })
+
+        test('should require authentication for admin prices', async () => {
+            const response = await fetch('http://localhost:3000/api/admin/prices')
+
+            expect(response.status).toBe(401)
+        })
+
+        test('should require authentication for admin gallery', async () => {
+            const response = await fetch('http://localhost:3000/api/admin/gallery')
+
+            expect(response.status).toBe(401)
+        })
+    })
+})
+
+// Example of authenticated admin tests (would need actual login flow)
+describe('Authenticated Admin Tests', () => {
+    let authCookie: string
+
+    beforeAll(async () => {
+        // In a real test, you would login and get the auth cookie
+        // const loginResponse = await fetch('/api/auth', { method: 'POST', ... })
+        // authCookie = extractCookieFromResponse(loginResponse)
+    })
+
+    test.skip('should create new category when authenticated', async () => {
+        // This test is skipped as it requires actual authentication
+        const response = await fetch('http://localhost:3000/api/admin/categories', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Cookie': authCookie,
+            },
+            body: JSON.stringify({
+                title: 'Test Category',
+                slug: 'test-category',
+                description: 'Test description',
+                roomCount: 5,
+                specs: {
+                    ac: true,
+                    wifi: true,
+                    tv: true,
+                    geyser: true,
+                    cctv: true,
+                    parking: true,
+                    attached: true,
+                },
+            }),
+        })
+
+        expect(response.status).toBe(200)
+        const data = await response.json()
+        expect(data.success).toBe(true)
+        expect(data.data.title).toBe('Test Category')
+    })
+})
