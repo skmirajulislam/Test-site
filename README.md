@@ -14,12 +14,18 @@ A modern, production-grade **hotel booking and management platform** built with 
 * ✅ **Vercel Optimization** — Enhanced performance on serverless environments
 * ✅ **Reliable File Uploads** — No more unwanted auto-deletions
 
-### 🧾 New Documentation
 
-* `MIGRATION_COMPLETE.md` — Summary of migration changes
-* `ENVIRONMENT_SETUP.md` — Environment configuration guide
-* `MIGRATION_GUIDE.md` — Detailed migration walkthrough
-* `DEPLOYMENT_GUIDE.md` — Production deployment guide
+## ⚖️ Legal Notice
+
+This project, **Dolly Hotel – Next.js Hotel Management System**, and all associated files, assets, and documentation are the **intellectual property** of the **Dolly Hotel Development Team**.
+
+Unauthorized reproduction, distribution, modification, or use of this codebase — in part or in whole — **for commercial, educational, or professional purposes** without **prior written consent** from the project maintainers is strictly prohibited.
+
+> 🚨 Any individual, company, or organization found using this template or its derivatives **without explicit permission** will be subject to **legal action** under applicable intellectual property and copyright laws.
+
+For licensing inquiries, permissions, or professional use, please **contact the project owner or authorized representative before use**.
+
+📧 **Contact:** [[your-email@example.com](mailto:dollyhotel001@gmail.com)]
 
 ---
 
