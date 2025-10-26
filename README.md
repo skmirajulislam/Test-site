@@ -12,7 +12,7 @@ Unauthorized reproduction, distribution, modification, or use of this codebase �
 
 For licensing inquiries, permissions, or professional use, please **contact the project owner or authorized representative before use**.
 
-📧 **Contact:** [[your-email@example.com](mailto:dollyhotel001@gmail.com)]
+📧 **Contact:** [[dollyhotel001@gmail.com](mailto:dollyhotel001@gmail.com)]
 
 ---
 
