@@ -17,7 +17,7 @@ A modern, production-grade **hotel booking and management platform** built with 
 
 ## ⚖️ Legal Notice
 
-This project, **Dolly Hotel – Next.js Hotel Management System**, and all associated files, assets, and documentation are the **intellectual property** of the **Dolly Hotel Development Team**.
+This project, **Dolly Hotel – Next.js Hotel Management System**, and all associated files, assets, and documentation are the **intellectual property** of the **Lodge digital Development Team**.
 
 Unauthorized reproduction, distribution, modification, or use of this codebase — in part or in whole — **for commercial, educational, or professional purposes** without **prior written consent** from the project maintainers is strictly prohibited.
 
