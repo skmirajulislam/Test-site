@@ -2,19 +2,6 @@
 
 A modern, production-grade **hotel booking and management platform** built with **Next.js**, offering dynamic room categories, pricing, galleries, and an admin management system.
 
----
-
-## ✨ Recent Updates (December 2024)
-
-### 🎉 Major Enhancements
-
-* ✅ **Fixed Favicon Issue** — Now works seamlessly across all domains
-* ✅ **Migrated to UploadThing** — Replaced Cloudinary for faster, more stable file handling
-* ✅ **Improved Error Handling** — Added safe fallbacks for missing media assets
-* ✅ **Vercel Optimization** — Enhanced performance on serverless environments
-* ✅ **Reliable File Uploads** — No more unwanted auto-deletions
-
-
 ## ⚖️ Legal Notice
 
 This project, **Dolly Hotel – Next.js Hotel Management System**, and all associated files, assets, and documentation are the **intellectual property** of the **Lodge digital Development Team**.
